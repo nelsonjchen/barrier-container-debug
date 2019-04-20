@@ -27,7 +27,6 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
     widget.deselectAll();    
     widget.selectComponent("qt.5113.win64_msvc2017_64");
     widget.selectComponent("qt.5113.qtscript");    
-    widget.selectComponent("qt.tools.vcredist_msvc2017_x64");
     gui.clickButton(buttons.NextButton);
 }
 
