@@ -19,3 +19,13 @@ RUN Start-Process -filepath C:\vs_buildtools.exe -passthru -wait -argumentlist `
     '--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --quiet --nocache --wait'; `
     Remove-Item C:\vs_BuildTools.exe; `
     Remove-Item -Force -Recurse 'C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer'
+
+COPY qtifwsilent.qs C:\qtifwsilent.qs
+RUN $Wc = New-Object System.Net.WebClient ; `
+    $Wc.DownloadFile('https://download.qt.io/official_releases/qt/5.11/5.11.3/qt-opensource-windows-x86-5.11.3.exe', 'C:\qt.exe') ; `
+    Echo 'Downloaded QT Installer' ; `
+    $Env:QT_INSTALL_DIR = 'C:\\Qt' ; `
+    Start-Process C:\qt.exe -ArgumentList '--verbose --script C:/qtifwsilent.qs' -NoNewWindow -Wait ; `
+    Remove-Item C:\qt.exe -Force ; `
+    Remove-Item C:\qtifwsilent.qs -Force
+ENV QTDIR C:\\Qt\\5.11.3\\msvc2017_64
