@@ -22,10 +22,10 @@ RUN Start-Process -filepath C:\vs_buildtools.exe -passthru -wait -argumentlist `
 
 COPY qtifwsilent.qs C:\qtifwsilent.qs
 RUN $Wc = New-Object System.Net.WebClient ; `
-    $Wc.DownloadFile('https://download.qt.io/official_releases/qt/5.11/5.11.3/qt-opensource-windows-x86-5.11.3.exe', 'C:\qt.exe') ; `
+    $Wc.DownloadFile('https://download.qt.io/official_releases/qt/5.12/5.12.3/qt-opensource-windows-x86-5.12.3.exe', 'C:\qt.exe') ; `
     Echo 'Downloaded QT Installer' ; `
     $Env:QT_INSTALL_DIR = 'C:\\Qt' ; `
     Start-Process C:\qt.exe -ArgumentList '--verbose --script C:/qtifwsilent.qs' -NoNewWindow -Wait ; `
     Remove-Item C:\qt.exe -Force ; `
     Remove-Item C:\qtifwsilent.qs -Force
-ENV QTDIR C:\\Qt\\5.11.3\\msvc2017_64
+ENV QTDIR C:\\Qt\\5.12.3\\msvc2017_64

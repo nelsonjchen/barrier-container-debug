@@ -6,7 +6,12 @@ function Controller() {
 }
 
 Controller.prototype.WelcomePageCallback = function() {
-    gui.clickButton(buttons.NextButton);
+    console.log("Welcome Page");
+    var widget = gui.currentPageWidget();
+    widget.completeChanged.connect(function() {
+        // For some reason, this page needs some delay.
+        gui.clickButton(buttons.NextButton);
+    });
 }
 
 Controller.prototype.CredentialsPageCallback = function() {
@@ -23,10 +28,20 @@ Controller.prototype.TargetDirectoryPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
+    console.log("Component Selection Page");
+
+    var components = installer.components();
+    console.log("Available packages: " + components.length);
+    var packages = ["===LIST OF PACKAGES==="];
+    for (var i = 0 ; i < components.length ;i++) {
+        packages.push(components[i].name + "    " + components[i].displayName);
+    }
+    packages.push("===END OF PACKAGES===");
+    console.log(packages.join("\n"));
+
     var widget = gui.currentPageWidget();
     widget.deselectAll();    
-    widget.selectComponent("qt.5113.win64_msvc2017_64");
-    widget.selectComponent("qt.5113.qtscript");    
+    widget.selectComponent("qt.qt5.5123.win64_msvc2017_64");
     gui.clickButton(buttons.NextButton);
 }
 
