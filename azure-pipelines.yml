@@ -9,6 +9,6 @@ jobs:
         targetfolder: 'Qt/5.12.3'
         vstsFeed: '$(ArtifactFeed)'
     - task: PowerShell@2
+      condition: ne(variables['CacheRestored'], 'true')
       inputs:
         filePath: download_install_qt.ps1
-        condition: ne(variables['CacheRestored'], 'true')
