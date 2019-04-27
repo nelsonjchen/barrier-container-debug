@@ -6,7 +6,7 @@ jobs:
     - task: 1ESLighthouseEng.PipelineArtifactCaching.RestoreCacheV1.RestoreCache@1
       inputs:
         keyfile: 'azure-pipelines.yml'
-        targetfolder: 'C:\\cachetest'
+        targetfolder: 'cachetest'
         vstsFeed: '$(ArtifactFeed)'
     # - task: PowerShell@2
     #   inputs:
@@ -14,9 +14,9 @@ jobs:
     - task: PowerShell@2
       inputs:
         targetType: inline
-        script: New-Item -ItemType directory -Path C:\cachetest; Write-Output Test | Out-File C:\cachetest\Test.txt          
+        script: New-Item -ItemType directory -Path cachetest; Write-Output Test | Out-File cachetest\Test.txt          
     - task: 1ESLighthouseEng.PipelineArtifactCaching.SaveCacheV1.SaveCache@1
       inputs:
         keyfile: 'azure-pipelines.yml'
-        targetfolder: 'C:\\cachetest'
+        targetfolder: 'cachetest'
         vstsFeed: '$(ArtifactFeed)'
