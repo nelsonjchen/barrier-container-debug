@@ -3,4 +3,6 @@ jobs:
   pool:
     vmImage: VS2017-Win2016
   steps:
-    - script: echo Hello World
+    - task: PowerShell@2
+      inputs:
+        filePath: download_install_qt.ps1
