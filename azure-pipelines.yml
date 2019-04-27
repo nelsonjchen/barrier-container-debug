@@ -6,7 +6,7 @@ jobs:
     - task: 1ESLighthouseEng.PipelineArtifactCaching.RestoreCacheV1.RestoreCache@1
       inputs:
         keyfile: 'download_install_qt.ps1'
-        targetfolder: 'Qt/5.12.3/'
+        targetfolder: 'Qt'
         vstsFeed: '$(ArtifactFeed)'
     - task: PowerShell@2
       inputs:
@@ -14,5 +14,5 @@ jobs:
     - task: 1ESLighthouseEng.PipelineArtifactCaching.SaveCacheV1.SaveCache@1
       inputs:
         keyfile: 'download_install_qt.ps1'
-        targetfolder: 'Qt/5.12.3/'
+        targetfolder: 'Qt'
         vstsFeed: '$(ArtifactFeed)'
