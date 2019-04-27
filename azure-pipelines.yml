@@ -3,7 +3,7 @@ jobs:
   pool:
     vmImage: VS2017-Win2016
   steps:
-    - task: 1ESLighthouseEng.PipelineArtifactCaching.RestoreCacheV1.RestoreCache@1
+    - task: 1ESLighthouseEng.PipelineArtifactCaching.RestoreAndSaveCacheV1.RestoreAndSaveCache@1
       inputs:
         keyfile: 'download_install_qt.ps1'
         targetfolder: 'Qt'
@@ -11,8 +11,4 @@ jobs:
     - task: PowerShell@2
       inputs:
         filePath: download_install_qt.ps1
-    - task: 1ESLighthouseEng.PipelineArtifactCaching.SaveCacheV1.SaveCache@1
-      inputs:
-        keyfile: 'download_install_qt.ps1'
-        targetfolder: 'Qt'
-        vstsFeed: '$(ArtifactFeed)'
+        condition: ne(variables['CacheRestored'], 'true')
