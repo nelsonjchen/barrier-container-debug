@@ -20,12 +20,17 @@ RUN Start-Process -filepath C:\vs_buildtools.exe -passthru -wait -argumentlist `
     Remove-Item C:\vs_BuildTools.exe; `
     Remove-Item -Force -Recurse 'C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer'
 
-COPY qtifwsilent.qs C:\qtifwsilent.qs
-RUN $Wc = New-Object System.Net.WebClient ; `
-    $Wc.DownloadFile('https://download.qt.io/official_releases/qt/5.12/5.12.3/qt-opensource-windows-x86-5.12.3.exe', 'C:\qt.exe') ; `
-    Echo 'Downloaded QT Installer' ; `
-    $Env:QT_INSTALL_DIR = 'C:\\Qt' ; `
-    Start-Process C:\qt.exe -ArgumentList '--verbose --script C:/qtifwsilent.qs' -NoNewWindow -Wait ; `
-    Remove-Item C:\qt.exe -Force ; `
-    Remove-Item C:\qtifwsilent.qs -Force
-ENV QTDIR C:\\Qt\\5.12.3\\msvc2017_64
+RUN Invoke-WebRequest -Uri https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression; `
+    choco feature enable --name allowGlobalConfirmation
+
+RUN choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+
+# COPY qtifwsilent.qs C:\qtifwsilent.qs
+# RUN $Wc = New-Object System.Net.WebClient ; `
+#     $Wc.DownloadFile('https://download.qt.io/official_releases/qt/5.12/5.12.3/qt-opensource-windows-x86-5.12.3.exe', 'C:\qt.exe') ; `
+#     Echo 'Downloaded QT Installer' ; `
+#     $Env:QT_INSTALL_DIR = 'C:\\Qt' ; `
+#     Start-Process C:\qt.exe -ArgumentList '--verbose --script C:/qtifwsilent.qs' -NoNewWindow -Wait ; `
+#     Remove-Item C:\qt.exe -Force ; `
+#     Remove-Item C:\qtifwsilent.qs -Force
+# ENV QTDIR C:\\Qt\\5.12.3\\msvc2017_64
