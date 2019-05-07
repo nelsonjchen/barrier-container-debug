@@ -3,7 +3,7 @@ jobs:
   pool:
     vmImage: VS2017-Win2016
   steps:
-    - task: 1ESLighthouseEng.PipelineArtifactCaching.RestoreAndSaveCacheV1.RestoreAndSaveCache@1
+    - task: 1ESLighthouseEng.PipelineArtifactCaching.RestoreCacheV1.RestoreCache@1
       inputs:
         keyfile: 'download_install_qt.ps1, azure-pipelines.yml'
         targetfolder: 'Qt/5.12.3'
@@ -12,3 +12,9 @@ jobs:
       condition: ne(variables['CacheRestored'], 'true')
       inputs:
         filePath: download_install_qt.ps1
+    - task: 1ESLighthouseEng.PipelineArtifactCaching.SaveCacheV1.SaveCache@1
+      inputs:
+        keyfile: 'download_install_qt.ps1, azure-pipelines.yml'
+        targetfolder: 'Qt/5.12.3'
+        vstsFeed: '$(ArtifactFeed)'
+        condition: and(succeeded(), ne(variables['CacheRestored'], 'true'))
